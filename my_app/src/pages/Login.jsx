@@ -30,13 +30,12 @@ function Login() {
       setErrMsgReg("")
     }
     try {
-      const response = await Axios.post("http://localhost:8080/login/postUser", null, {
+      await Axios.post("http://localhost:8080/login/postUser", null, {
         params: {
           name: usernameReg,
           password: passwordReg,
         }
       })
-      console.log(response)
       setErrMsgReg("Registered")
     }
     catch (err) {

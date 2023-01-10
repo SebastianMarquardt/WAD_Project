@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Play() {
+function Words() {
     return (
         <h1>this is the homepage</h1>
     );
 }
 
-export default Play;
+export default Words;
