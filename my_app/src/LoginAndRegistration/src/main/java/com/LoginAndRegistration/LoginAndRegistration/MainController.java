@@ -85,6 +85,7 @@ public class MainController {
     @CrossOrigin
     public @ResponseBody String deleteAllUsers() {
         userRepository.deleteAll();
+        addNewUser("admin", "admin");
         return "All users deleted";
     }
 }

@@ -59,8 +59,12 @@ function Login() {
           password: passwordLog,
         }
       })
-      console.log(response)
       setErrMsgLog("")
+      localStorage.setItem('name', JSON.stringify(response.data.name));
+      localStorage.setItem('highscore', JSON.stringify(response.data.highscore));
+      console.log(localStorage.getItem('name'))
+      console.log(localStorage.getItem('highscore'))
+      window.location.reload(false);
     }
     catch (err) {
       if (!err?.response) {
