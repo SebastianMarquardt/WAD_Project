@@ -37,15 +37,19 @@ public class MainController {
 
     @PutMapping(path="/putCorrect")
     @CrossOrigin
-    public @ResponseBody String putCorrect(@RequestParam String word){
-        if (word == "") {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "empty parameters"); //422
+    public @ResponseBody String putCorrect(@RequestParam String wrongWord, @RequestParam String newWord){
+        if (wordRepository.existsByWord(newWord)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "corrected word already exists"); //409
         }
-        if (wordRepository.existsByWord(word)) {
-            Word tmp = wordRepository.findByWord(word);
-            wordRepository.deleteByWord(tmp.getWord());
-            tmp.setWord(word);
-            wordRepository.save(tmp);
+        if (newWord == "" || wrongWord == "") {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "empty parameter"); //422
+        }
+        if (wordRepository.existsByWord(wrongWord)) {
+            Word tmp = wordRepository.findByWord(wrongWord);
+            wordRepository.deleteById(tmp.getId());
+            Word n = new Word();
+            n.setWord(newWord);
+            wordRepository.save(n);
             return "Word corrected to " + tmp.getWord();
         }
         else {
@@ -56,12 +60,10 @@ public class MainController {
     @DeleteMapping(path="/deleteWord")
     @CrossOrigin
     public @ResponseBody String deleteWord(@RequestParam String word){
-        if (word == "") {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "empty parameters"); //422
-        }
         if (wordRepository.existsByWord(word)) {
-            wordRepository.deleteByWord(word);
-            return word + " deleted";
+            Word tmp = wordRepository.findByWord(word);
+            wordRepository.deleteById(tmp.getId());
+            return "Deleted " + word;
         }
         else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no such word detected");

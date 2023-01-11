@@ -35,6 +35,7 @@ function Users() {
                     name: user,
                 }
             })
+            window.location.reload(false);
         }
         catch (err) {
             if (!err?.response) {
@@ -53,8 +54,7 @@ function Users() {
                     newHighscore: highscore,
                 }
             })
-
-            setErrMsg("Highscore patched")
+            window.location.reload(false);
         }
         catch (err) {
             if (!err?.response) {
