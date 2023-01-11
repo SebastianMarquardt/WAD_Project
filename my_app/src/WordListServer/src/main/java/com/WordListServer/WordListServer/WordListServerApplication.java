@@ -18,10 +18,10 @@ import java.util.Scanner;
 @SpringBootApplication
 public class WordListServerApplication {
 
-/*	@Autowired
+	@Autowired
 	private MainController mainController;
 
-	private String wordApiData;*/
+	private String wordApiData;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WordListServerApplication.class, args);
@@ -34,10 +34,9 @@ public class WordListServerApplication {
 
 	private void setWordApiData() {
 		System.out.println("fetching words...");
-		mainController.deleteAllWords();
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 5; i++) {
 			try {
-				URL url = new URL("https://api.api-ninjas.com/v1/randomword");
+				URL url = new URL("http://random-word-api.herokuapp.com/word");
 
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
@@ -47,6 +46,10 @@ public class WordListServerApplication {
 
 				if (responseCode != 200) {
 					throw new RuntimeException("HttpResponseCode " + responseCode);
+				}
+				if (responseCode != 503) {
+					System.out.println("waiting for api");
+					continue;
 				}
 				else {
 					StringBuilder informationString = new StringBuilder();

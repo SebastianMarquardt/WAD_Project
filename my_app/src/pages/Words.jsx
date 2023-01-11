@@ -7,6 +7,7 @@ function Words() {
 
     const [words, setWords] = useState([])
     const [newWord, setNewWord] = useState("")
+    const [correctedWord, setCorrectedWord] = useState("")
     const [errMsg, setErrMsg] = useState("");
 
     const fetchData = () => {
@@ -68,6 +69,27 @@ function Words() {
         };
     }
 
+    const putWord = async (wrongWord) => {
+        try {
+            await Axios.put("http://localhost:8081/words/putCorrect", null, {
+                params: {
+                    wrongWord: wrongWord,
+                    newWord: correctedWord
+                }
+            })
+            window.location.reload(false);
+        }
+        catch (err) {
+            if (!err?.response) {
+                setErrMsg("No Server Response");
+            } else if (err.response?.status === 409) {
+                setErrMsg("Word does already exist");
+            } else {
+                setErrMsg("Word not found")
+            }
+        };
+    }
+
     return (
         <div>
             <ul id='addWord'>
@@ -85,6 +107,10 @@ function Words() {
                         <li key={word.word}>
                             <h1>{word.word}</h1>
                             <button onClick={() => deleteWord(word.word)}>Delete</button>
+                            <input type="text" onChange={(e) => {
+                                setCorrectedWord(e.target.value)
+                            }} placeholder={word.word}></input>
+                            <button onClick={() => putWord(word.word)}>Correct word</button>
                         </li>
                     ))}
                 </ul>
