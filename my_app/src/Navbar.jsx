@@ -42,7 +42,7 @@ function Navbar() {
                     <Link to="/login" id="NavbarLI">Login/Register</Link>
                 </li>
                 <li id="NavbarUser">
-                    <p>Hello {storedName}</p>
+                    <p>Hello, {storedName}</p>
                 </li>
             </ul>
         </nav>

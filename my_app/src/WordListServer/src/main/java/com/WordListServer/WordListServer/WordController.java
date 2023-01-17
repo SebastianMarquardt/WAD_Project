@@ -32,7 +32,7 @@ public class WordController {
     @DeleteMapping(path="/deleteWord")
     @CrossOrigin
     public @ResponseBody String deleteWord(@RequestParam String word){
-        return deleteWord(word);
+        return wordService.deleteWord(word);
     }
 
     @DeleteMapping(path="/deleteAll")
