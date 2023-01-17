@@ -1,91 +1,49 @@
 package com.LoginAndRegistration.LoginAndRegistration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Collections;
 
 @Controller
 @RequestMapping(path="/login")
 public class MainController {
+
     @Autowired
-    private UserRepository userRepository;
+    UserService userService;
 
     @PostMapping(path="/postUser")
     @CrossOrigin
     public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam String password) {
-        if (userRepository.existsByName(name)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "user already exists"); //409
-        }
-        if (name == "" || password == "") {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "empty parameters"); //422
-        }
-        User n = new User();
-        n.setName(name);
-        n.setPassword(password);
-        n.setHighscore(0);
-        userRepository.save(n);
-        return "Saved";
+        return userService.addNewUser(name,password);
     }
 
     @DeleteMapping(path="/deleteUser")
     @CrossOrigin
     public @ResponseBody String deleteUser(@RequestParam String name) {
-        if (userRepository.existsByName(name)) {
-            User tmp = userRepository.findByName(name);
-            userRepository.deleteById(tmp.getId());
-            return "Deleted " + name;
-        }
-        else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no such user detected");
-        }
+        return userService.deleteUser(name);
     }
 
     @PostMapping
     @CrossOrigin
     public @ResponseBody User findUser (@RequestParam String name, @RequestParam String password) {
-        if (userRepository.existsByName(name)) {
-            User tmp = userRepository.findByName(name);
-            if (tmp.checkPassword(password)) {
-                return tmp;
-            }
-            else {
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "wrong password");
-            }
-        }
-        else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no such user detected");
-        }
+        return userService.findUser(name, password);
     }
 
     @PatchMapping(path="/patchHighscore")
     @CrossOrigin
     public @ResponseBody String patchHighscore (@RequestParam String name, @RequestParam Integer newHighscore) {
-        if (userRepository.existsByName(name)) {
-            User tmp = userRepository.findByName(name);
-            tmp.setHighscore(newHighscore);
-            userRepository.save(tmp);
-            return "Highscore for " + tmp.getName() + " updated to " + tmp.getHighscore();
-        }
-        else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no such user detected");
-        }
+        return userService.patchHighscore(name, newHighscore);
     }
 
     @GetMapping(path="/getAllUsers")
     @CrossOrigin
     public @ResponseBody Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @DeleteMapping(path="/deleteAllUsers")
     @CrossOrigin
     public @ResponseBody String deleteAllUsers() {
-        userRepository.deleteAll();
-        addNewUser("admin", "admin");
-        return "All users deleted";
+        return userService.deleteAllUsers();
     }
 }

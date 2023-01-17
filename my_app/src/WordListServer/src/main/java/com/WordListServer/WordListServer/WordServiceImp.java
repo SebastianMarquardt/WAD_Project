@@ -2,26 +2,22 @@ package com.WordListServer.WordListServer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-@Controller
-@RequestMapping(path="/words")
-public class MainController {
+@Service
+public class WordServiceImp implements WordService {
 
     @Autowired
     private WordRepository wordRepository;
 
-    @GetMapping(path="/getAll")
-    @CrossOrigin
-    public @ResponseBody Iterable<Word> getAllWords() {
+    @Override
+    public Iterable<Word> getAllWords() {
         return wordRepository.findAll();
     }
 
-    @PostMapping(path="/postNewWord")
-    @CrossOrigin
-    public @ResponseBody String postNewWord(@RequestParam String word){
+    @Override
+    public String postNewWord(String word) {
         if (wordRepository.existsByWord(word)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "word already exists"); //409
         }
@@ -35,9 +31,8 @@ public class MainController {
         return "Saved";
     }
 
-    @PutMapping(path="/putCorrect")
-    @CrossOrigin
-    public @ResponseBody String putCorrect(@RequestParam String wrongWord, @RequestParam String newWord){
+    @Override
+    public String putCorrect(String wrongWord, String newWord) {
         if (wordRepository.existsByWord(newWord)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "corrected word already exists"); //409
         }
@@ -57,9 +52,14 @@ public class MainController {
         }
     }
 
-    @DeleteMapping(path="/deleteWord")
-    @CrossOrigin
-    public @ResponseBody String deleteWord(@RequestParam String word){
+    @Override
+    public String deleteAllWords() {
+        wordRepository.deleteAll();
+        return "all words deleted";
+    }
+
+    @Override
+    public String deleteWord(String word) {
         if (wordRepository.existsByWord(word)) {
             Word tmp = wordRepository.findByWord(word);
             wordRepository.deleteById(tmp.getId());
@@ -68,12 +68,5 @@ public class MainController {
         else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no such word detected");
         }
-    }
-
-    @DeleteMapping(path="/deleteAll")
-    @CrossOrigin
-    public @ResponseBody String deleteAllWords(){
-        wordRepository.deleteAll();
-        return "all words deleted";
     }
 }

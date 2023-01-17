@@ -1,25 +1,14 @@
 package com.WordListServer.WordListServer;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.json.simple.JSONObject;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
-import java.net.*;
-import java.util.Scanner;
 
 @SpringBootApplication
 public class WordListServerApplication {
 
 	@Autowired
-	private MainController mainController;
+	private WordController mainController;
 
 	private String wordApiData;
 
