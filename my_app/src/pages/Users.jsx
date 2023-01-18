@@ -54,6 +54,9 @@ function Users() {
                     newHighscore: highscore,
                 }
             })
+            if ("\""+user+"\"" === localStorage.getItem('name')) {
+                localStorage.setItem('highscore', JSON.stringify(`${highscore}`))
+            }
             window.location.reload(false);
         }
         catch (err) {

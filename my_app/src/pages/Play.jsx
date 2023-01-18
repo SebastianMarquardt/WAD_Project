@@ -5,15 +5,23 @@ import Axios from 'axios';
 
 function Play() {
 
+    if (localStorage.getItem('name') == null) {
+        localStorage.setItem('name', JSON.stringify(""));
+    }
     if (localStorage.getItem('highscore') == null) {
         localStorage.setItem('highscore', JSON.stringify("0"));
     }
-    const highscore = localStorage.getItem('highscore')
+    var rawName = localStorage.getItem('name')
+    var name = rawName.substring(1, rawName.length - 1)
+    const rawHighscore = localStorage.getItem('highscore')
+    const highscore = parseInt(rawHighscore.substring(1, rawHighscore.length - 1))
 
     const [currentScore, setCurrentScore] = useState(0)
-    const [newWord, setNewWord] = useState("")
     const [errMsg, setErrMsg] = useState("")
     const [words, setWords] = useState([])
+    const [currentWord, setCurrentWord] = useState("")
+    var newWord = ""
+    const [seenWords,setSeenWords] = useState([])
 
     const fetchData = () => {
         fetch("http://localhost:8081/words/getAll")
@@ -26,6 +34,7 @@ function Play() {
             })
             .then(data => {
                 setWords(data)
+                setCurrentWord(data[randomInt(data.length - 1)].word)
             })
             .catch((error) => console.error("FETCH ERROR:", error));
     }
@@ -56,8 +65,75 @@ function Play() {
         }
     }
 
+    const setNewWord = (word) => {
+        newWord = word;
+    }
+
     function randomInt(max) {
         return Math.floor(Math.random() * (max + 1))
+    }
+
+    const seenCheck = () => {
+//        console.log(seenWords)
+        var currentWordString = currentWord
+        if (seenWords.includes(currentWordString)) {
+            setCurrentScore(currentScore + 1)
+        }
+        else {
+/*            console.log(seenWords)
+            console.log(currentWord + " was not in")
+            console.log(currentScore)
+*/
+            if (currentScore > highscore) {
+                patchHighscore()
+            }
+            setCurrentScore(0)
+            setSeenWords([])
+        }
+        currentWordString = ""
+        setCurrentWord(words[randomInt(words.length - 1)].word)
+    }
+
+    const notSeenCheck = () => {
+//        console.log(seenWords)
+        var currentWordString = currentWord
+        if (seenWords.includes(currentWordString)) {
+/*            console.log(seenWords)
+            console.log(currentWord + " was already in")
+            console.log(currentScore)
+*/
+            if (currentScore > highscore) {
+                patchHighscore()
+            }
+            setCurrentScore(0)
+            setSeenWords([])            
+        }
+        else {
+            setCurrentScore(currentScore + 1)
+            setSeenWords([ ...seenWords, currentWord])
+        }
+        currentWordString = ""
+        setCurrentWord(words[randomInt(words.length - 1)].word)
+    }
+
+    const patchHighscore = async () => {
+        try {
+            await Axios.patch("http://localhost:8080/login/patchHighscore", null, {
+                params: {
+                    name: name,
+                    newHighscore: currentScore,
+                }
+            })
+            localStorage.setItem('highscore', JSON.stringify(`${currentScore}`))
+            window.location.reload(false);
+        }
+        catch (err) {
+            if (!err?.response) {
+                setErrMsg("No Server Response");
+            } else {
+                setErrMsg("User not found")
+            }
+        };
     }
 
     return (
@@ -82,16 +158,14 @@ function Play() {
             <ul>
                 {words.length > 0 && (
                     <li>
-                        <h1>{
-                            words[randomInt(words.length - 1)].word
-                        }</h1>
+                        <h1>{currentWord}</h1>
                     </li>
                 )}
                 <li>
-                    <button>already seen</button>
+                    <button onClick={seenCheck}>already seen</button>
                 </li>
                 <li>
-                    <button>new in this session</button>
+                    <button onClick={notSeenCheck}>new in this session</button>
                 </li>
             </ul>
             <ul id='addWord'>
