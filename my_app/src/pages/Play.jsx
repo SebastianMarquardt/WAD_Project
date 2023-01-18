@@ -20,8 +20,8 @@ function Play() {
     const [errMsg, setErrMsg] = useState("")
     const [words, setWords] = useState([])
     const [currentWord, setCurrentWord] = useState("")
-    var newWord = ""
-    const [seenWords,setSeenWords] = useState([])
+    const [newWord, setNewWord] = useState("")
+    const [seenWords, setSeenWords] = useState([])
 
     const fetchData = () => {
         fetch("http://localhost:8081/words/getAll")
@@ -65,25 +65,21 @@ function Play() {
         }
     }
 
-    const setNewWord = (word) => {
-        newWord = word;
-    }
-
     function randomInt(max) {
         return Math.floor(Math.random() * (max + 1))
     }
 
     const seenCheck = () => {
-//        console.log(seenWords)
+        //        console.log(seenWords)
         var currentWordString = currentWord
         if (seenWords.includes(currentWordString)) {
             setCurrentScore(currentScore + 1)
         }
         else {
-/*            console.log(seenWords)
-            console.log(currentWord + " was not in")
-            console.log(currentScore)
-*/
+            /*            console.log(seenWords)
+                        console.log(currentWord + " was not in")
+                        console.log(currentScore)
+            */
             if (currentScore > highscore) {
                 patchHighscore()
             }
@@ -95,22 +91,22 @@ function Play() {
     }
 
     const notSeenCheck = () => {
-//        console.log(seenWords)
+        //        console.log(seenWords)
         var currentWordString = currentWord
         if (seenWords.includes(currentWordString)) {
-/*            console.log(seenWords)
-            console.log(currentWord + " was already in")
-            console.log(currentScore)
-*/
+            /*            console.log(seenWords)
+                        console.log(currentWord + " was already in")
+                        console.log(currentScore)
+            */
             if (currentScore > highscore) {
                 patchHighscore()
             }
             setCurrentScore(0)
-            setSeenWords([])            
+            setSeenWords([])
         }
         else {
             setCurrentScore(currentScore + 1)
-            setSeenWords([ ...seenWords, currentWord])
+            setSeenWords([...seenWords, currentWord])
         }
         currentWordString = ""
         setCurrentWord(words[randomInt(words.length - 1)].word)
@@ -137,45 +133,43 @@ function Play() {
     }
 
     return (
-        <div id='introDiv'>
-            <ul>
-                <li>
-                    <h1>
-                        Try to differentiate between new words, and words you've already seen
-                    </h1>
-                </li>
-                <li>
+        <div id='playDiv'>
+            <ul id='scoreUl'>
+                <li id='scoreLi'>
                     <h2>
                         Highscore: {highscore}
                     </h2>
                 </li>
-                <li>
+                <li id='scoreLi'>
                     <h2>
                         current Score: {currentScore}
                     </h2>
                 </li>
             </ul>
-            <ul>
-                {words.length > 0 && (
-                    <li>
-                        <h1>{currentWord}</h1>
-                    </li>
-                )}
+            {words.length > 0 && (
+                <h1 id='currentWord'>{currentWord}</h1>
+            )}
+            <ul id='gameButtons'>
                 <li>
-                    <button onClick={seenCheck}>already seen</button>
+                    <button id='checkButton' onClick={seenCheck}>Already seen</button>
                 </li>
                 <li>
-                    <button onClick={notSeenCheck}>new in this session</button>
+                    <button id='checkButton' onClick={notSeenCheck}>New in this session</button>
                 </li>
             </ul>
+            <h1 id='gameInfo'>
+                Try to differentiate between new words, and words you've already seen
+            </h1>
             <ul id='addWord'>
-                <p>{errMsg}</p>
-                <li><input type="text" onChange={(e) => {
-                    setNewWord(e.target.value)
-                }} ></input></li>
-                <li>
-                    <button onClick={addWord}>Add new word</button>
-                </li>
+                <ul id='addWordNoErr'>
+                    <li><input id='addWordInput' type="text" onChange={(e) => {
+                        setNewWord(e.target.value)
+                    }} ></input></li>
+                    <li>
+                        <button id='addWordButton' onClick={addWord}>Add new word</button>
+                    </li>
+                </ul>
+                <li><p>{errMsg}</p></li>
             </ul></div>
     );
 }

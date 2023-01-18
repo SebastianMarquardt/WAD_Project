@@ -1,3 +1,29 @@
+body {
+    background-color: #BFEAF5;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #393E46;
+}
+
+button {
+    border: none;
+    background-color: #71C9CE;
+    border-radius: 4px;
+    padding: 15px 32px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #78dbe0cd;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin: 8px;
+}
+
 #NavbarUL {
     position: fixed;
     display: flex;
@@ -5,20 +31,19 @@
     top: 0;
     width: 100%;
     left: 0;
-    list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #333;
+    background-color: #82AAE3;
 }
 
 #NavbarLI {
     float: left;
     display: block;
-    color: white;
+    color: #E3FDFD;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #NavbarUser {
@@ -27,8 +52,10 @@
     padding: 14px 16px;
     text-decoration: none;
     float: right;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
 }
 
 li a:hover {
-    background-color: #111;
+    background-color: #91D8E4;
 }

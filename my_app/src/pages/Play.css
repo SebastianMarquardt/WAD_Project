@@ -1,3 +1,47 @@
-.App {
-    padding-top: 102px;
-  }
+#playDiv {
+    padding-top: 50px;
+}
+
+#scoreUl {
+    display: flex;
+    justify-content: space-around;
+}
+
+#currentWord {
+  color: #222831;
+  text-align: center;
+  margin: auto;
+  width: 30%;
+  border-bottom: 3px solid #71C9CE;
+  padding: 10px;
+}
+
+#gameButtons {
+  display: flex;
+  justify-content: center;
+
+}
+
+#checkButton {
+  width: 320px;
+  height: 54px;
+  font-size: 20px;
+}
+
+#gameInfo {
+  text-align: center;
+  margin: auto;
+  padding: 10px;
+  font-size: large;
+}
+
+#addWord {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 0px;
+}
+
+#addWordInput {
+  width: 164px;
+}
