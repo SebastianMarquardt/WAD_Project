@@ -104,13 +104,15 @@ function Words() {
             {words.length > 0 && (
                 <ul id='wordList'>
                     {words.map(word => (
-                        <li key={word.word}>
-                            <h1>{word.word}</h1>
-                            <button onClick={() => deleteWord(word.word)}>Delete</button>
-                            <input type="text" onChange={(e) => {
-                                setCorrectedWord(e.target.value)
-                            }} placeholder={word.word}></input>
-                            <button onClick={() => putWord(word.word)}>Correct word</button>
+                        <li key={word.word} id='wordItem'>
+                            <ul id='wordItems'>
+                                <li><h2>{word.word}</h2></li>
+                                <li><button onClick={() => deleteWord(word.word)}>Delete</button></li>
+                                <li><input type="text" onChange={(e) => {
+                                    setCorrectedWord(e.target.value)
+                                }} placeholder={word.word}></input></li>
+                                <li><button onClick={() => putWord(word.word)}>Correct word</button></li>
+                            </ul>
                         </li>
                     ))}
                 </ul>

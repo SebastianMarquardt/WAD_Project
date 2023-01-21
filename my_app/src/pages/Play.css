@@ -1,10 +1,10 @@
 #playDiv {
-    padding-top: 50px;
+  padding-top: 50px;
 }
 
 #scoreUl {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 #currentWord {
@@ -33,13 +33,6 @@
   margin: auto;
   padding: 10px;
   font-size: large;
-}
-
-#addWord {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  padding: 0px;
 }
 
 #addWordInput {
