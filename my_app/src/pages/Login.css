@@ -7,3 +7,5 @@
 #error {
   display: none;
 }
+
+@media screen and (max-width: 769px) {}

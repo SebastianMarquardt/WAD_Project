@@ -38,3 +38,9 @@
 #addWordInput {
   width: 164px;
 }
+
+@media screen and (max-width: 769px) {
+  #playDiv {
+    padding-top: 420px;
+  }
+}

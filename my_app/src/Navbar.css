@@ -59,3 +59,15 @@ li {
 li a:hover {
     background-color: #91D8E4;
 }
+
+@media screen and (max-width: 769px) {
+    #NavbarUL {
+        flex-direction: column;
+        position: absolute;
+        height: 80%; 
+    }
+
+    #NavbarLI {
+        padding: 10px 10px;
+    }
+}

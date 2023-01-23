@@ -54,7 +54,7 @@ function Users() {
                     newHighscore: highscore,
                 }
             })
-            if ("\""+user+"\"" === localStorage.getItem('name')) {
+            if ("\"" + user + "\"" === localStorage.getItem('name')) {
                 localStorage.setItem('highscore', JSON.stringify(`${highscore}`))
             }
             window.location.reload(false);
@@ -73,13 +73,15 @@ function Users() {
             {users.length > 0 && (
                 <ul id='userList'>
                     {users.map(user => (
-                        <li key={user.name}>
-                            <h1>{user.name}</h1>
-                            <button onClick={() => deleteUser(user.name)}>Delete</button>
-                            <input type="number" onChange={(e) => {
-                                setHighscore(e.target.value)
-                            }} ></input>
-                            <button onClick={() => patchHighscore(user.name)}>Patch Highscore</button>
+                        <li key={user.name} id='userItem'>
+                            <ul id='userItems'>
+                                <li></li><h1>{user.name}</h1>
+                                <li><button onClick={() => deleteUser(user.name)}>Delete</button></li>
+                                <li><input type="number" onChange={(e) => {
+                                    setHighscore(e.target.value)
+                                }} ></input></li>
+                                <li><button onClick={() => patchHighscore(user.name)}>Patch Highscore</button></li>
+                            </ul>
                         </li>
                     ))}
                 </ul>

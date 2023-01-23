@@ -14,8 +14,10 @@ function Play() {
     var rawName = localStorage.getItem('name')
     var name = rawName.substring(1, rawName.length - 1)
     const rawHighscore = localStorage.getItem('highscore')
-    const highscore = parseInt(rawHighscore.substring(1, rawHighscore.length - 1))
-
+    var highscore = parseInt(rawHighscore)
+    if (rawHighscore.charAt(0) === "\"") {
+        highscore = parseInt(rawHighscore.substring(1, rawHighscore.length - 1))
+    }
     const [currentScore, setCurrentScore] = useState(0)
     const [errMsg, setErrMsg] = useState("")
     const [words, setWords] = useState([])
@@ -70,16 +72,11 @@ function Play() {
     }
 
     const seenCheck = () => {
-        //        console.log(seenWords)
         var currentWordString = currentWord
         if (seenWords.includes(currentWordString)) {
             setCurrentScore(currentScore + 1)
         }
         else {
-            /*            console.log(seenWords)
-                        console.log(currentWord + " was not in")
-                        console.log(currentScore)
-            */
             if (currentScore > highscore) {
                 patchHighscore()
             }
@@ -91,13 +88,8 @@ function Play() {
     }
 
     const notSeenCheck = () => {
-        //        console.log(seenWords)
         var currentWordString = currentWord
         if (seenWords.includes(currentWordString)) {
-            /*            console.log(seenWords)
-                        console.log(currentWord + " was already in")
-                        console.log(currentScore)
-            */
             if (currentScore > highscore) {
                 patchHighscore()
             }
