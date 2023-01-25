@@ -19,7 +19,6 @@
 #gameButtons {
   display: flex;
   justify-content: center;
-
 }
 
 #checkButton {
@@ -41,6 +40,47 @@
 
 @media screen and (max-width: 769px) {
   #playDiv {
-    padding-top: 420px;
+    padding-top: 330px;
+    padding: 0px;
+    padding-top: 330px;
+  }
+
+  #scoreUl {
+    flex-direction: column;
+    text-align: center;
+    padding: 0px;
+    justify-content: flex-start;
+  }
+
+  #currentWord {
+    color: #222831;
+    text-align: center;
+    left: 0px;
+    width: 90%;
+    border-bottom: 3px solid #71C9CE;
+    padding: 0px;
+  }
+
+  #gameButtons {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10%;
+  }
+
+  #checkButton {
+    width: 250px;
+    height: 54px;
+    font-size: 20px;
+  }
+
+  #gameInfo {
+    padding-top: 0px;
+  }
+
+  #addWord {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 }

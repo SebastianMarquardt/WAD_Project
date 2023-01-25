@@ -29,4 +29,18 @@
     align-items: center;
 }
 
-@media screen and (max-width: 769px) {}
+@media screen and (max-width: 769px) {
+    #addWord {
+        padding-top: 330px;
+    }
+
+    #wordList {
+        padding-top: 20px;
+        padding-left: 0%;
+    
+      }
+    
+      #wordItem {
+        width: 100%;
+      }
+}

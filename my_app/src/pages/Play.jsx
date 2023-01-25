@@ -152,6 +152,9 @@ function Play() {
             <h1 id='gameInfo'>
                 Try to differentiate between new words, and words you've already seen
             </h1>
+            <h1 id='gameInfo'>
+                Suggest new words:
+            </h1>
             <ul id='addWord'>
                 <ul id='addWordNoErr'>
                     <li><input id='addWordInput' type="text" onChange={(e) => {

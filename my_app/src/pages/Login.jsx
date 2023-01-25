@@ -79,7 +79,7 @@ function Login() {
   return (
     <div className="App">
       <div className="login">
-        <ul>
+        <ul id='login'>
           <li><h1>Login</h1></li>
           <li><label>Username</label></li>
           <li><input type="text" onChange={(e) => {
@@ -94,7 +94,7 @@ function Login() {
         </ul>
       </div>
       <div className="registration">
-        <ul>
+        <ul id='registration'>
           <li><h1>Register</h1></li>
           <li><label>Username</label></li>
           <li><input type="text" onChange={(e) => {
