@@ -24,6 +24,7 @@ function Play() {
     const [currentWord, setCurrentWord] = useState("")
     const [newWord, setNewWord] = useState("")
     const [seenWords, setSeenWords] = useState([])
+    const [scoreColor, setScoreColor] = useState("#393E46")
 
     const fetchData = () => {
         fetch("http://localhost:8081/words/getAll")
@@ -75,6 +76,7 @@ function Play() {
         var currentWordString = currentWord
         if (seenWords.includes(currentWordString)) {
             setCurrentScore(currentScore + 1)
+            setScoreColor("#393E46")
         }
         else {
             if (currentScore > highscore) {
@@ -82,6 +84,7 @@ function Play() {
             }
             setCurrentScore(0)
             setSeenWords([])
+            setScoreColor("red")
         }
         currentWordString = ""
         setCurrentWord(words[randomInt(words.length - 1)].word)
@@ -95,10 +98,12 @@ function Play() {
             }
             setCurrentScore(0)
             setSeenWords([])
+            setScoreColor("red")
         }
         else {
             setCurrentScore(currentScore + 1)
             setSeenWords([...seenWords, currentWord])
+            setScoreColor("#393E46")
         }
         currentWordString = ""
         setCurrentWord(words[randomInt(words.length - 1)].word)
@@ -133,7 +138,7 @@ function Play() {
                     </h2>
                 </li>
                 <li id='scoreLi'>
-                    <h2>
+                    <h2 style={{color: scoreColor}}>
                         current Score: {currentScore}
                     </h2>
                 </li>
