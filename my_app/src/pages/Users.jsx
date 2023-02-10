@@ -29,6 +29,9 @@ function Users() {
     }, [])
 
     const deleteUser = async (user) => {
+        if (window.confirm(`Are you sure, you want to delete ${user}?`) === false) {
+            return;
+        }
         try {
             await Axios.delete("http://localhost:8080/login/deleteUser", {
                 params: {

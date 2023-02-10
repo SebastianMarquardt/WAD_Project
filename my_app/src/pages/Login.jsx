@@ -20,9 +20,15 @@ function Login() {
     e.preventDefault();
     const v1 = USER_REGEX.test(usernameReg);
     const v2 = PWD_REGEX.test(passwordReg);
-    if (!v1 || !v2) {
-      if (errMsgReg !== "Invalid username or password") {
-        setErrMsgReg("Invalid username or password")
+    if (!v2) {
+      if (errMsgReg !== "password needs length of 5, one special character and number") {
+        setErrMsgReg("password needs length of 5, one special character and number")
+      }
+      return;
+    }
+    if (!v1) {
+      if (errMsgReg !== "username needs length of 4 and no special characters") {
+        setErrMsgReg("username needs length of 4 and no special characters")
       }
       return;
     }
